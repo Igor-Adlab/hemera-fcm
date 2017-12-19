@@ -1,60 +1,67 @@
 import * as HP from 'hemera-plugin';
 
 import { Sender } from './Sender';
-import {INotification, ISubscribeRequest} from "./interfaces/IActionSendTopic";
-import {CMD_SEND_GROUP, CMD_SEND_ID, CMD_SEND_TOPIC, CMD_SUBSCRIBE, CMD_UNSUBSCRIBE, TOPIC_FCM} from "./constants";
+import {
+    CMD_SEND_DEVICE, CMD_SEND_GROUP, CMD_SEND_TOPIC, CMD_SUBSCRIBE, CMD_UNSUBSCRIBE,
+    TOPIC_FCM
+} from "./constants";
 
 export * from './constants';
 
 export interface IHemeraFCMOptions {
-    key: string;
+    credentials: any;
 }
 
-export const HemeraFCM = HP(async (hemera, options: IHemeraFCMOptions) => {
-    const sender = new Sender(options.key);
+export const options = { name: 'hemera-fcm' };
+export const plugin = HP((hemera, options: IHemeraFCMOptions, next: Function) => {
+    const sender = new Sender(options.credentials);
 
     hemera.add({
         topic: TOPIC_FCM,
-        cmd: CMD_SEND_ID,
-    }, (request: INotification, cb) =>
-        sender.send(CMD_SEND_ID, request)
+        cmd: CMD_SEND_DEVICE,
+    }, (request: any, cb) => {
+        console.log(request)
+        sender.send(CMD_SEND_DEVICE, request.id, request.payload)
             .then(data => cb(null, data))
-            .then(err => cb(err, null))
+            .catch(err => cb(err, null))
+        }
     );
 
     hemera.add({
         topic: TOPIC_FCM,
         cmd: CMD_SEND_TOPIC,
-    }, (request: INotification, cb) =>
-        sender.send(CMD_SEND_TOPIC, request)
+    }, (request: any, cb) =>
+        sender.send(CMD_SEND_TOPIC, request.id, request.payload)
             .then(data => cb(null, data))
-            .then(err => cb(err, null))
+            .catch(err => cb(err, null))
     );
 
     hemera.add({
         topic: TOPIC_FCM,
         cmd: CMD_SEND_GROUP,
-    }, (request: INotification, cb) =>
-        sender.send(CMD_SEND_GROUP, request)
+    }, (request: any, cb) =>
+        sender.send(CMD_SEND_GROUP, request.id, request.payload)
             .then(data => cb(null, data))
-            .then(err => cb(err, null))
+            .catch(err => cb(err, null))
     );
 
     hemera.add({
         topic: TOPIC_FCM,
         cmd: CMD_SUBSCRIBE,
-    }, (request: ISubscribeRequest, cb) =>
-        sender.subscribe(request.client, request.topic)
+    }, (request: any, cb) =>
+        sender.subscribe(request.payload.client, request.payload.topic)
             .then(data => cb(null, data))
-            .then(err => cb(err, null))
+            .catch(err => cb(err, null))
     );
 
     hemera.add({
         topic: TOPIC_FCM,
         cmd: CMD_UNSUBSCRIBE,
-    }, (request: ISubscribeRequest, cb) =>
-        sender.unsubscribe(request.client, request.topic)
+    }, (request: any, cb) =>
+        sender.unsubscribe(request.payload.client, request.payload.topic)
             .then(data => cb(null, data))
-            .then(err => cb(err, null))
+            .catch(err => cb(err, null))
     );
-});
+
+    next();
+}, '>=2');
