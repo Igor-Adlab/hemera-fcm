@@ -1,0 +1,43 @@
+{
+  "name": "hemera-fcm",
+  "version": "0.0.1",
+  "description": "Hemera plugin for Google FCM",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.2",
+    "@types/nats-hemera": "^1.0.0",
+    "@types/node": "^8.5.1",
+    "hemera-testsuite": "^1.4.1",
+    "reflect-metadata": "^0.1.10",
+    "tsc": "^1.20150623.0",
+    "tslint": "^5.4.3",
+    "typescript": "^2.5.2",
+    "typescript-require": "^0.2.9-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Igor-Adlab/hemera-fcm.git"
+  },
+  "keywords": [
+    "hemera.js",
+    "fcm"
+  ],
+  "author": "Igor Olshevsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Igor-Adlab/hemera-fcm/issues"
+  },
+  "homepage": "https://github.com/Igor-Adlab/hemera-fcm#readme",
+  "dependencies": {
+    "firebase-admin": "^5.5.1",
+    "hemera-plugin": "0.0.17",
+    "nats": "^0.7.24",
+    "nats-hemera": "^2.4.3",
+    "nodemon": "^1.13.3"
+  }
+}

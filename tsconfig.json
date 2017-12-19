@@ -1,0 +1,38 @@
+{
+  "exclude": [
+    "lib",
+    "typings",
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "pretty": true,
+    "removeComments": true,
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "types": [
+      "node",
+      "nats",
+      "reflect-metadata"
+    ],
+    "outDir": "./lib",
+    "typeRoots": [
+      "node_modules/nats",
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
